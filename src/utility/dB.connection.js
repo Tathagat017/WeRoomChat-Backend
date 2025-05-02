@@ -10,13 +10,6 @@ if (!DB_URL) {
   throw new Error("DB_URL is not defined in environment variables");
 }
 
-const mongooseOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000,
-  socketTimeoutMS: 45000,
-};
-
 // Store the connection promise
 const connectionPromise = mongoose.connect(DB_URL);
 

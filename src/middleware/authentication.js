@@ -5,7 +5,9 @@ dotenv.config();
 
 const AuthenticationHandler = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token);
+  if (!req.body) {
+    req.body = {};
+  }
   if (token) {
     jwt.verify(
       token.split(" ")[1],

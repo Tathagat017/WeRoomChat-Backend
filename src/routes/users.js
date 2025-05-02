@@ -78,4 +78,26 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+userRouter.get("/allUsers", async (req, res) => {
+  try {
+    // Find all users and return only the required fields
+    const users = await userModel.find({}, "full_name email _id");
+
+    // Map the users to match the User interface
+    const formattedUsers = users.map((user) => ({
+      id: user._id.toString(), // Convert Mongo _id to string
+      full_name: user.full_name,
+      email: user.email,
+    }));
+
+    // Send the formatted users list as the response
+    res.status(200).send(formattedUsers);
+  } catch (err) {
+    console.error("Error fetching all users:", err);
+    res
+      .status(500)
+      .send({ message: "Failed to fetch users", error: err.message });
+  }
+});
+
 module.exports = { userRouter };
